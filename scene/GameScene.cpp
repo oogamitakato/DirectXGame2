@@ -94,7 +94,6 @@ void GameScene::Draw() {
 	/// </summary>
 
 	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
-	//PrimitiveDrawer::GetInstance()->DrawLine3d(Vector3(-10.0f, 0.0f, 0.0f), Vector3(10.0f, 0.0f, 10.0f), Vector4(255,255,255,255));
 
 	for (int i = 0; i < 4; i++) 
 	{
