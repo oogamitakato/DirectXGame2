@@ -1,17 +1,21 @@
 ﻿#include "GameScene.h"
+#include "AxisIndicator.h"
+#include "PrimitiveDrawer.h"
 #include "TextureManager.h"
 #include <cassert>
-#include "PrimitiveDrawer.h"
-#include "AxisIndicator.h"
+#include <math.h>
+#include <random>
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() { 
+GameScene::~GameScene() {
+
+	//自キャラの解放
+	delete player_;
 
 	delete debugCamera_;
 
 	delete model_;
-
 }
 
 void GameScene::Initialize() {
@@ -21,16 +25,34 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 
+	//ワールドトランスフォームの初期化
+
+	//カメラ視点座標を設定
+	viewProjection_.eye = {0, 0, -50};
+
+	//ビュープロジェクションの初期化
+	viewProjection_.Initialize();
+
+	//乱数シード生成器
+	std::random_device seed_gen;
+	//メルセンヌ・ツイスターの乱数エンジン
+	std::mt19937_64 engine(seed_gen());
+	//乱数範囲(回転角用)
+	std::uniform_real_distribution<float> rotDist(0.0f, PI * 2);
+	//乱数範囲(座標用)
+	std::uniform_real_distribution<float> posDist(-10.0f, 10.0f);
+	//乱数範囲(スケーリング用)
+	std::uniform_real_distribution<float> scaDist(0.1f, 5.0f);
+
+	float rotRand = rotDist(engine);
+	float posRand = posDist(engine);
+	float scaRand = scaDist(engine);
+
 	//ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
 
-	//3Dモデル生成
+	// 3Dモデル生成
 	model_ = Model::Create();
-
-	//ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
-	//ビュープロジェクションの初期化
-	viewProjection_.Initialize();
 
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
@@ -38,52 +60,22 @@ void GameScene::Initialize() {
 	//軸方向表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向h表示が参照するビュープロジェクションを指定する(アドレス渡し)
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 
 	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
 
-	for (int i = 0; i < 8; i++) 
-	{
-		//平行移動する立方体の初期化
-		boxMoved[i] = vertex[i];
-		boxMoved2[i] = boxMoved[i];
-
-		boxMoved[i] = {
-		  boxMoved2[i].x * position[0][0] + boxMoved2[i].y * position[1][0] + boxMoved2[i].z * position[2][0] + position[3][0],
-		  boxMoved2[i].x * position[0][1] + boxMoved2[i].y * position[1][1] + boxMoved2[i].z * position[2][1] + position[3][1],
-		  boxMoved2[i].x * position[0][2] + boxMoved2[i].y * position[1][2] + boxMoved2[i].z * position[2][2] + position[3][2],
-		  
-		};
-
-		//回転する立方体の初期化
-		boxRotated[i] = vertex[i];
-		boxRotated2[i] = boxRotated[i];
-
-		boxRotated[i] = {
-		  boxRotated2[i].x * rotation[0][0] + boxRotated2[i].y * rotation[1][0] + boxRotated2[i].z * rotation[2][0],
-		  boxRotated2[i].x * rotation[0][1] + boxRotated2[i].y * rotation[1][1] + boxRotated2[i].z * rotation[2][1],
-		  boxRotated2[i].x * rotation[0][2] + boxRotated2[i].y * rotation[1][2] + boxRotated2[i].z * rotation[2][2],
-		};
-
-		//拡大する立方体の初期化
-		boxScaled[i] = vertex[i];
-		boxScaled2[i] = boxScaled[i];
-
-		boxScaled[i] = {
-		  boxScaled2[i].x * scale[0][0] + boxScaled2[i].y * scale[1][0] + boxScaled2[i].z * scale[2][0],
-		  boxScaled2[i].x * scale[0][1] + boxScaled2[i].y * scale[1][1] + boxScaled2[i].z * scale[2][1],
-		  boxScaled2[i].x * scale[0][2] + boxScaled2[i].y * scale[1][2] + boxScaled2[i].z * scale[2][2],
-		};
-	}
-
+	//自キャラの生成
+	player_ = new Player(model_, textureHandle_);
 
 }
 
 void GameScene::Update() { 
 
-	debugCamera_->Update();
+	//自キャラの更新
+	player_->Update();
 
+	debugCamera_->Update();
 }
 
 void GameScene::Draw() {
@@ -113,8 +105,8 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-	//3Dモデル描画
-	//model_->Draw(worldTransform_, debugCamera_->GetViewProjection(), textureHandle_);
+	//自キャラの描画
+	player_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -130,18 +122,16 @@ void GameScene::Draw() {
 	/// </summary>
 
 	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
-	for (int i = 0; i < 12; i++) 
-	{
-		PrimitiveDrawer::GetInstance()->DrawLine3d(
-		  vertex[eageList[i][0]], vertex[eageList[i][1]], Vector4(255, 255, 255, 255));
-		PrimitiveDrawer::GetInstance()->DrawLine3d(
-		  boxMoved[eageList[i][0]], boxMoved[eageList[i][1]], Vector4(255, 0, 0, 255));
-		PrimitiveDrawer::GetInstance()->DrawLine3d(
-		  boxRotated[eageList[i][0]], boxRotated[eageList[i][1]], Vector4(0, 255, 0, 255));
-		PrimitiveDrawer::GetInstance()->DrawLine3d(
-		  boxScaled[eageList[i][0]], boxScaled[eageList[i][1]], Vector4(0, 0, 255, 255));
-	}
-
+	/*for (int i = 0; i < 12; i++) {
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      vertex[eageList[i][0]], vertex[eageList[i][1]], Vector4(255, 255, 255, 255));
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      boxMoved[eageList[i][0]], boxMoved[eageList[i][1]], Vector4(255, 0, 0, 255));
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      boxRotated[eageList[i][0]], boxRotated[eageList[i][1]], Vector4(0, 255, 0, 255));
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      boxScaled[eageList[i][0]], boxScaled[eageList[i][1]], Vector4(0, 0, 255, 255));
+	}*/
 
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
