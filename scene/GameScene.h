@@ -43,6 +43,15 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
+	//スケーリング設定
+	void SetScale(float x, float y, float z);
+
+	//回転設定
+	void SetRot(float x, float y, float z);
+
+	//平行移動設定
+	void SetTrans(float x, float y, float z);
+
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -50,7 +59,7 @@ class GameScene {
 	DebugText* debugText_ = nullptr;
 
 	//円周率
-	const float PI = 3.14f;
+	const float PI = 3.14159f;
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
