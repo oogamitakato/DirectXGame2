@@ -45,12 +45,19 @@ void GameScene::Initialize() {
 
 	//カメラ視点座標を設定
 	viewProjection_.eye = {0.0f, 0.0f, -50.0f};
-
 	//カメラ注視点座標を設定
-	viewProjection_.target = {10.0f, 0.0f, 0.0f};
-
+	viewProjection_.target = {0.0f, 0.0f, 0.0f};
 	//カメラ上方向ベクトルを設定
-	viewProjection_.up = {cosf(PI / 4.0f), sinf(PI / 4.0f), 0.0f};
+	viewProjection_.up = {0.0f, 1.0f, 0.0f};
+
+	//カメラの垂直方向視野角を設定
+	viewProjection_.fovAngleY = ConversionRadian(10.0f);
+	//アスペクト比を設定
+	viewProjection_.aspectRatio = (float)16 / 9;
+	//ニアクリップ距離を設定
+	viewProjection_.nearZ = 52.0f;
+	//ファークリップ距離を設定
+	viewProjection_.farZ = 53.0f;
 	
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -99,21 +106,21 @@ void GameScene::Initialize() {
 void GameScene::Update() { 
 	//視点移動処理
 	{
-		//視点の移動べクトル
-		Vector3 move = {0.0f, 0.0f, 0.0f};
+		////視点の移動べクトル
+		//Vector3 move = {0.0f, 0.0f, 0.0f};
 
-		//視点の移動速さ
-		const float kEyeSpeed = 0.2f;
+		////視点の移動速さ
+		//const float kEyeSpeed = 0.2f;
 
-		//押した方向で移動ベクトルを変更
-		if (input_->PushKey(DIK_W)) {
-			move.z += kEyeSpeed;
-		} else if (input_->PushKey(DIK_S)) {
-			move.z -= kEyeSpeed;
-		}
+		////押した方向で移動ベクトルを変更
+		//if (input_->PushKey(DIK_W)) {
+		//	move.z += kEyeSpeed;
+		//} else if (input_->PushKey(DIK_S)) {
+		//	move.z -= kEyeSpeed;
+		//}
 
-		//視点移動(ベクトルの加算)
-		viewProjection_.eye += move;
+		////視点移動(ベクトルの加算)
+		//viewProjection_.eye += move;
 
 		//デバッグ用表示
 		debugText_->SetPos(50, 50);
@@ -126,21 +133,21 @@ void GameScene::Update() {
 
 	//注視点移動処理
 	{
-		//注視点の移動ベクトル
-		Vector3 move = {0.0f, 0.0f, 0.0f};
+		////注視点の移動ベクトル
+		//Vector3 move = {0.0f, 0.0f, 0.0f};
 
-		//注視点の移動速さ
-		const float kTargetSpeed = 0.2f;
+		////注視点の移動速さ
+		//const float kTargetSpeed = 0.2f;
 
-		//押した方向で移動ベクトルを変更
-		if (input_->PushKey(DIK_LEFT)) {
-			move.x -= kTargetSpeed;
-		} else if (input_->PushKey(DIK_RIGHT)) {
-			move.x += kTargetSpeed;
-		}
+		////押した方向で移動ベクトルを変更
+		//if (input_->PushKey(DIK_LEFT)) {
+		//	move.x -= kTargetSpeed;
+		//} else if (input_->PushKey(DIK_RIGHT)) {
+		//	move.x += kTargetSpeed;
+		//}
 
-		//注視点移動(ベクトルの加算)
-		viewProjection_.target += move;
+		////注視点移動(ベクトルの加算)
+		//viewProjection_.target += move;
 
 		//デバッグ用表示
 		debugText_->SetPos(50, 70);
@@ -153,18 +160,18 @@ void GameScene::Update() {
 
 	//上方向回転処理
 	{
-		//上方向の回転速さ[ラジアン/flame]
-		const float kUpRotSpeed = 0.05f;
+		////上方向の回転速さ[ラジアン/flame]
+		//const float kUpRotSpeed = 0.05f;
 
-		//押した方向で移動ベクトルを変更
-		if (input_->PushKey(DIK_SPACE)) {
-			viewAngle += kUpRotSpeed;
-			//2πを超えたら0に戻す
-			viewAngle = fmodf(viewAngle, PI * 2.0f);
-		}
+		////押した方向で移動ベクトルを変更
+		//if (input_->PushKey(DIK_SPACE)) {
+		//	viewAngle += kUpRotSpeed;
+		//	//2πを超えたら0に戻す
+		//	viewAngle = fmodf(viewAngle, PI * 2.0f);
+		//}
 
-		//上方向ベクトルを計算(半径1の円周上の座標)
-		viewProjection_.up = {cosf(viewAngle), sinf(viewAngle), 0.0f};
+		////上方向ベクトルを計算(半径1の円周上の座標)
+		//viewProjection_.up = {cosf(viewAngle), sinf(viewAngle), 0.0f};
 
 		//デバッグ用表示
 		debugText_->SetPos(50, 90);
@@ -173,6 +180,40 @@ void GameScene::Update() {
 			viewProjection_.up.x,
 			viewProjection_.up.y,
 			viewProjection_.up.z);
+	}
+
+	//Fov変更処理
+	{
+		//上キーで視野角が広がる
+		if (input_->PushKey(DIK_UP)) {
+			viewProjection_.fovAngleY += 0.01f;
+			//πを上回らないようにする
+			viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, PI);
+		//下キーで視野角が狭まる
+		} else if (input_->PushKey(DIK_DOWN)) {
+			viewProjection_.fovAngleY -= 0.01f;
+			//0.01fを下回らないようにする
+			viewProjection_.fovAngleY = max(viewProjection_.fovAngleY, 0.01f);
+		}
+
+		//デバッグ用表示
+		debugText_->SetPos(50, 110);
+		debugText_->Printf(
+		  "fovAngleY(Degree):%f",ConversionDegree(viewProjection_.fovAngleY));
+	}
+
+	//クリップ距離更新処理
+	{
+		//W,Sキーでニアクリップを増減
+		if (input_->PushKey(DIK_W)) {
+			viewProjection_.nearZ += 0.1f;
+		} else if (input_->PushKey(DIK_S)) {
+			viewProjection_.nearZ -= 0.1f;
+		}
+
+				//デバッグ用表示
+		debugText_->SetPos(50, 130);
+		debugText_->Printf("nearZ:%f",viewProjection_.nearZ);
 	}
 
 	//行列の再計算
@@ -321,4 +362,16 @@ void GameScene::SetTrans(float x, float y, float z) {
 		// matTransを掛け算して代入
 		worldTransform.matWorld_ *= matTrans;
 	}
+}
+
+//ラジアン変換
+float GameScene::ConversionRadian(float degree) { 
+	degree = degree * PI / 180;
+	return degree;
+}
+
+//度変換
+float GameScene::ConversionDegree(float radian) {
+	radian = radian * 180 / PI;
+	return radian;
 }

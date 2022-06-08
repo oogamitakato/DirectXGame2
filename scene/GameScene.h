@@ -52,6 +52,11 @@ class GameScene {
 	//平行移動設定
 	void SetTrans(float x, float y, float z);
 
+	//ラジアン変換
+	float ConversionRadian(float degree);
+	//度変換
+	float ConversionDegree(float radian);
+
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
