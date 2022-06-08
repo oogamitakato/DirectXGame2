@@ -58,9 +58,6 @@ class GameScene {
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
 
-	//円周率
-	const float PI = 3.14159f;
-
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 
@@ -71,9 +68,12 @@ class GameScene {
 	Model* model_ = nullptr;
 
 	//ワールドトランスフォーム
-	WorldTransform worldTransform_;
+	WorldTransform worldTransforms_[100];
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
+
+	//カメラ上方向の角度
+	float viewAngle = 0.0f;
 
 	/// <summary>
 	/// ゲームシーン用
