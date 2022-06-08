@@ -51,7 +51,7 @@ void GameScene::Initialize() {
 	SetScale(5.0f, 5.0f, 5.0f);
 
 	//回転
-	SetRot(PI / 6, PI / 6, PI / 6);
+	SetRot(PI / 4.0f, PI / 4.0f, PI / 4.0f);
 
 	//平行移動
 	SetTrans(10.0f, 10.0f, 0.0f);
