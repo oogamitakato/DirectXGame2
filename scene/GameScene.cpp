@@ -2,12 +2,11 @@
 #include "TextureManager.h"
 #include "PrimitiveDrawer.h"
 #include "AxisIndicator.h"
+#include "mathMyFunc.h"
 #include <math.h>
 #include <cassert>
 #include <random>
 
-//円周率
-const float PI = 3.14159f;
 
 //乱数シード生成器
 std::random_device seed_gen;
@@ -202,7 +201,7 @@ void GameScene::Update() {
 		//デバッグ用表示
 		debugText_->SetPos(50, 110);
 		debugText_->Printf(
-		  "fovAngleY(Degree):%f",ConversionDegree(viewProjection_.fovAngleY));
+		  "fovAngleY(Degree):%f", ConversionDegree(viewProjection_.fovAngleY));
 	}
 
 	//クリップ距離更新処理
@@ -365,16 +364,4 @@ void GameScene::SetTrans(float x, float y, float z) {
 		// matTransを掛け算して代入
 		worldTransform.matWorld_ *= matTrans;
 	}
-}
-
-//ラジアン変換
-float GameScene::ConversionRadian(float degree) { 
-	degree = degree * PI / 180;
-	return degree;
-}
-
-//度変換
-float GameScene::ConversionDegree(float radian) {
-	radian = radian * 180 / PI;
-	return radian;
 }
