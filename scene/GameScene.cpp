@@ -50,14 +50,14 @@ void GameScene::Initialize() {
 	//カメラ上方向ベクトルを設定
 	viewProjection_.up = {0.0f, 1.0f, 0.0f};
 
-	//カメラの垂直方向視野角を設定
-	viewProjection_.fovAngleY = ConversionRadian(10.0f);
-	//アスペクト比を設定
-	viewProjection_.aspectRatio = (float)16 / 9;
-	//ニアクリップ距離を設定
-	viewProjection_.nearZ = 52.0f;
-	//ファークリップ距離を設定
-	viewProjection_.farZ = 53.0f;
+	////カメラの垂直方向視野角を設定
+	//viewProjection_.fovAngleY = ConversionRadian(10.0f);
+	////アスペクト比を設定
+	//viewProjection_.aspectRatio = (float)16 / 9;
+	////ニアクリップ距離を設定
+	//viewProjection_.nearZ = 52.0f;
+	////ファークリップ距離を設定
+	//viewProjection_.farZ = 53.0f;
 	
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -73,33 +73,36 @@ void GameScene::Initialize() {
 	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
 
-	for (WorldTransform& worldTransform : worldTransforms_) {
+	//for (WorldTransform& worldTransform : worldTransforms_) {
 
-		//乱数エンジンを渡し、指定範囲からランダムな数値を得る
-		float rotRand = rotDist(engine);
-		float posXRand = posDist(engine);
-		float posYRand = posDist(engine);
-		float posZRand = posDist(engine);
-		float sclRand = sclDist(engine);
-		
-		//ワールドトランスフォームの初期化
+	//	//乱数エンジンを渡し、指定範囲からランダムな数値を得る
+	//	float rotRand = rotDist(engine);
+	//	float posXRand = posDist(engine);
+	//	float posYRand = posDist(engine);
+	//	float posZRand = posDist(engine);
+	//	float sclRand = sclDist(engine);
+	//	
+	//}
+	
+	for (WorldTransform& worldTransform : worldTransforms_) {
+		//	ワールドトランスフォームの初期化
 		worldTransform.Initialize();
 
 		//単位行列を代入
 		worldTransform.matWorld_.m;
-
 		//スケーリング
-		SetScale(sclRand, sclRand, sclRand);
+		SetScale(1.0f, 1.0f, 1.0f);
 
 		//回転
-		SetRot(rotRand, rotRand, rotRand);
+		SetRot(0.0f, 0.0f, 0.0f);
 
 		//平行移動
-		SetTrans(posXRand, posYRand, posZRand);
+		SetTrans(0.0f, 0.0f, 0.0f);
 
 		//行列の転送
 		worldTransform.TransferMatrix();
 	}
+
 
 }
 
@@ -211,7 +214,7 @@ void GameScene::Update() {
 			viewProjection_.nearZ -= 0.1f;
 		}
 
-				//デバッグ用表示
+		//デバッグ用表示
 		debugText_->SetPos(50, 130);
 		debugText_->Printf("nearZ:%f",viewProjection_.nearZ);
 	}
