@@ -44,13 +44,13 @@ class GameScene {
 	void Draw();
 
 	//スケーリング設定
-	void SetScale(float x, float y, float z);
+	void SetScale(float x, float y, float z, int i);
 
 	//回転設定
-	void SetRot(float x, float y, float z);
+	void SetRot(float x, float y, float z, int i);
 
 	//平行移動設定
-	void SetTrans(float x, float y, float z);
+	void SetTrans(float x, float y, float z, int i);
 
 
   private: // メンバ変数
@@ -72,6 +72,8 @@ class GameScene {
 	WorldTransform worldTransforms_[10];
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
+
+	Matrix4 matTrans;
 
 	//カメラ上方向の角度
 	float viewAngle = 0.0f;
