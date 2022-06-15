@@ -25,7 +25,8 @@ struct WorldTransform {
 	// ローカル座標
 	Vector3 translation_ = {0, 0, 0};
 	// ローカル → ワールド変換行列
-	Matrix4 matWorld_;
+	Matrix4 matWorld_ = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+	                     0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 	// 親となるワールド変換へのポインタ
 	WorldTransform* parent_ = nullptr;
 

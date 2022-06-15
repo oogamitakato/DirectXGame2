@@ -17,7 +17,23 @@
 /// </summary>
 class GameScene {
 
-  public: // メンバ関数
+  public:
+	//パーツID
+	  enum PartId {
+		  kRoot,
+		  kSpine,
+		  kChest,
+		  kHead,
+		  kArmL,
+		  kArmR,
+		  kHip,
+		  kLegL,
+		  kLegR,
+
+		  kNumPartId
+	};
+
+	/// メンバ関数
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
@@ -44,14 +60,16 @@ class GameScene {
 	void Draw();
 
 	//スケーリング設定
-	void SetScale(float x, float y, float z, int i);
+	void SetScale(float& x, float& y, float& z, int i);
 
 	//回転設定
-	void SetRot(float x, float y, float z, int i);
+	void SetRot(float& x, float& y, float& z, int i);
 
 	//平行移動設定
-	void SetTrans(float x, float y, float z, int i);
+	void SetTrans(float &x, float &y, float &z, int i);
 
+	//オブジェクトの更新
+	void ObjectUpdate(int i);
 
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -73,7 +91,8 @@ class GameScene {
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	Matrix4 matTrans;
+	Matrix4 matTrans[10];
+	Matrix4 matRot[10];
 
 	//カメラ上方向の角度
 	float viewAngle = 0.0f;
