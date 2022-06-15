@@ -66,7 +66,7 @@ class GameScene {
 	void SetRot(float& x, float& y, float& z, int i);
 
 	//平行移動設定
-	void SetTrans(float &x, float &y, float &z, int i);
+	void SetTrans(float& x, float& y, float& z, int i);
 
 	//オブジェクトの更新
 	void ObjectUpdate(int i);
@@ -90,9 +90,6 @@ class GameScene {
 	WorldTransform worldTransforms_[10];
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
-
-	Matrix4 matTrans[10];
-	Matrix4 matRot[10];
 
 	//カメラ上方向の角度
 	float viewAngle = 0.0f;

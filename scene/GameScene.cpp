@@ -148,6 +148,7 @@ void GameScene::Update() {
 		worldTransforms_[PartId::kRoot].translation_ += move;
 
 		for (int i = 0; i < kNumPartId; i++) {
+			//オブジェクトを更新
 			ObjectUpdate(i);
 		}
 
@@ -326,7 +327,7 @@ void GameScene::SetRot(float& x, float& y, float& z, int i) {
 	worldTransforms_[i].matWorld_ *= matRot;
 }
 
-void GameScene::SetTrans(float &x, float &y, float &z, int i) {
+void GameScene::SetTrans(float& x, float& y, float& z, int i) {
 
 	// X,Y,Z軸周りの平行移動を設定
 	worldTransforms_[i].translation_ = {x, y, z};
@@ -380,8 +381,10 @@ void GameScene::ObjectUpdate(int i) {
 
 	//大元は親がいないのでスキップ
 	if (i != 0) {
-		//親のワールド行列をかけさん代入する
+		//親のワールド行列を掛け算代入する
 		worldTransforms_[i].matWorld_ *= worldTransforms_[i].parent_->matWorld_;
+	} else {
+	
 	}
 
 	//ワールド行列を転送
