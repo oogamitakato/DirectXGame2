@@ -21,7 +21,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position) {
 
 //çXêV
 void PlayerBullet::Update() { 
-
+	
 }
 
 //ï`âÊ

@@ -29,8 +29,14 @@ class Player {
 	//初期化(コンストラクタ)
 	Player(Model* model, uint32_t textureHandle);
 
-	//回転
-	void Rotate();
+	//スケーリング設定
+	void SetScale(float& x, float& y, float& z);
+
+	//回転角設定
+	void SetRot(float& x, float& y, float& z);
+
+	//平行移動設定
+	void SetTrans(float& x, float& y, float& z);
 
 	//更新
 	void Update();
