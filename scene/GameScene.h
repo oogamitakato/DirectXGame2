@@ -10,7 +10,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "player//Player.h"
+#include "Player.h"
 #include <math.h>
 
 /// <summary>
