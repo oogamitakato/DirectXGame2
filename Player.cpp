@@ -67,6 +67,14 @@ void Player::Update()
 
 	worldTransform_.matWorld_ *= matTrans;
 
+	//ƒLƒƒƒ‰ƒNƒ^[UŒ‚ˆ—
+	Attack();
+
+	//’eXV
+	if (bullet_) {
+		bullet_->Update();
+	}
+
 	//s—ñXV
 	worldTransform_.TransferMatrix();
 
@@ -83,9 +91,13 @@ void Player::Update()
 void Player::Draw(ViewProjection viewProjection)
 {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+
+	if (bullet_) {
+		bullet_->Draw(viewProjection);
+	}
 }
 
-void Player::SetScale(float& x, float& y, float& z) {
+void Player::ConversionScale(float& x, float& y, float& z) {
 
 	// X,Y,Z•ûŒü‚ÌƒXƒP[ƒŠƒ“ƒO‚ðÝ’è
 	worldTransform_.scale_ = {x, y, z};
@@ -115,7 +127,7 @@ void Player::SetScale(float& x, float& y, float& z) {
 	worldTransform_.matWorld_ *= matScale;
 }
 
-void Player::SetRot(float& x, float& y, float& z) {
+void Player::ConversionRot(float& x, float& y, float& z) {
 
 	// X,Y,ZŽ²Žü‚è‚Ì‰ñ“]Šp‚ðÝ’è
 	worldTransform_.rotation_ = {x, y, z};
@@ -190,7 +202,7 @@ void Player::SetRot(float& x, float& y, float& z) {
 	worldTransform_.matWorld_ *= matRot;
 }
 
-void Player::SetTrans(float& x, float& y, float& z) {
+void Player::ConversionTrans(float& x, float& y, float& z) {
 
 	// X,Y,ZŽ²Žü‚è‚Ì•½sˆÚ“®‚ðÝ’è
 	worldTransform_.translation_ = {x, y, z};
@@ -218,4 +230,16 @@ void Player::SetTrans(float& x, float& y, float& z) {
 
 	// matTrans‚ðŠ|‚¯ŽZ‚µ‚Ä‘ã“ü
 	worldTransform_.matWorld_ *= matTrans;
+}
+
+void Player::Attack() { 
+
+	if (input_->PushKey(DIK_SPACE)) {
+		//’e‚ð¶¬‚µA‰Šú‰»
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(model_, worldTransform_.translation_);
+
+		//’e‚ð“o˜^‚·‚é
+		bullet_ = newBullet;
+	}
 }

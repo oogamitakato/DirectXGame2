@@ -3,6 +3,7 @@
 #include "WorldTransform.h"
 #include "Input.h"
 #include "DebugText.h"
+#include "PlayerBullet.h"
 
 class Player {
   private:
@@ -23,6 +24,9 @@ class Player {
 	Input* input_;
 	DebugText* debugText_;
 
+	//弾
+	PlayerBullet* bullet_ = nullptr;
+
   public:
 	/*メンバ関数*/
 
@@ -30,17 +34,20 @@ class Player {
 	Player(Model* model, uint32_t textureHandle);
 
 	//スケーリング設定
-	void SetScale(float& x, float& y, float& z);
+	void ConversionScale(float& x, float& y, float& z);
 
 	//回転角設定
-	void SetRot(float& x, float& y, float& z);
+	void ConversionRot(float& x, float& y, float& z);
 
 	//平行移動設定
-	void SetTrans(float& x, float& y, float& z);
+	void ConversionTrans(float& x, float& y, float& z);
 
 	//更新
 	void Update();
 
 	//描画
 	void Draw(ViewProjection viewProjection);
+
+	//攻撃
+	void Attack();
 };
