@@ -74,7 +74,7 @@ void GameScene::Update() {
 
 	//自キャラの更新
 	player_->Update();
-
+	player_->Rotate();
 	debugCamera_->Update();
 }
 

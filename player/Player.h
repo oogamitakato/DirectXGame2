@@ -9,10 +9,12 @@ class Player {
 	/*メンバ変数*/
 	const float PI = 3.1415;
 	float speed = 0.5f;
+	Vector3 move;
+
+	Matrix4 matTrans = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, move.x, move.y, move.z, 1};
 
 	//ワールド変換データ
 	WorldTransform worldTransform_;
-
 	//モデル
 	Model* model_ = nullptr;
 	//テクスチャハンドル

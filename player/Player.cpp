@@ -25,29 +25,30 @@ Player::Player(Model* model, uint32_t textureHandle)
 //回転
 void Player::Rotate()
 {
-	//worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 
-	////キー入力で回転
-	//if (input_->PushKey(DIK_Q)) 
-	//{
-	//	worldTransform_.rotation_.x += (PI / 6);
-	//}
+	//キー入力で回転
+	if (input_->PushKey(DIK_Q)) 
+	{
+		worldTransform_.rotation_.x += (PI / 24.0f);
+		//worldTransform_.matWorld_ *= matTrans
+	}
 
-	//Matrix4 matRotX(
-	//	1, 0, 0, 0,
-	//	0, cos(worldTransform_.rotation_.x), sin(worldTransform_.rotation_.x), 0, 
-	//	0, -sin(worldTransform_.rotation_.x), cos(worldTransform_.rotation_.x), 0,
-	//	0, 0, 0, 1);
+	Matrix4 matRotX(
+		1, 0, 0, 0,
+		0, cos(worldTransform_.rotation_.x), sin(worldTransform_.rotation_.x), 0, 
+		0, -sin(worldTransform_.rotation_.x), cos(worldTransform_.rotation_.x), 0,
+		0, 0, 0, 1);
 
-	//worldTransform_.matWorld_ *= matRotX;
+	worldTransform_.matWorld_ *= matRotX;
 
-	//worldTransform_.TransferMatrix();
+	worldTransform_.TransferMatrix();
 };
 
 //更新
 void Player::Update() 
 { 
-	//Rotate();
+	Rotate();
 
 	Vector3 move = {0, 0, 0}; 
 
@@ -90,8 +91,6 @@ void Player::Update()
 		move.x, move.y, move.z, 1);
 
 	worldTransform_.matWorld_ *= matTrans;
-
-
 
 	//行列更新
 	worldTransform_.TransferMatrix();
