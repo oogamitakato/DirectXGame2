@@ -74,6 +74,7 @@ void GameScene::Update() {
 
 	//自キャラの更新
 	player_->Update();
+
 	debugCamera_->Update();
 }
 
@@ -120,6 +121,18 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
+	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
+	/*for (int i = 0; i < 12; i++) {
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      vertex[eageList[i][0]], vertex[eageList[i][1]], Vector4(255, 255, 255, 255));
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      boxMoved[eageList[i][0]], boxMoved[eageList[i][1]], Vector4(255, 0, 0, 255));
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      boxRotated[eageList[i][0]], boxRotated[eageList[i][1]], Vector4(0, 255, 0, 255));
+	    PrimitiveDrawer::GetInstance()->DrawLine3d(
+	      boxScaled[eageList[i][0]], boxScaled[eageList[i][1]], Vector4(0, 0, 255, 255));
+	}*/
+
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
 	//
@@ -128,4 +141,85 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
+
+//void GameScene::SetScale(float x, float y, float z) {
+//
+//	// X,Y,Z方向のスケーリングを設定
+//	worldTransform_.scale_ = {x, y, z};
+//	//スケーリング行列を宣言
+//	Matrix4 matScale;
+//
+//	//スケーリング倍率を行列に設定
+//	matScale = {
+//		worldTransform_.scale_.x,0.0f,0.0f,0.0f,
+//		0.0f,worldTransform_.scale_.y,0.0f,0.0f,
+//		0.0f,0.0f,worldTransform_.scale_.z,0.0f,
+//		0.0f,0.0f,0.0f,1.0f
+//	};
+//
+//	// matScaleを掛け算して代入
+//	worldTransform_.matWorld_ *= matScale;
+//}
+//
+//void GameScene::SetRot(float x, float y, float z) {
+//
+//	// X,Y,Z軸周りの回転角を設定
+//	worldTransform_.rotation_ = {x, y, z};
+//	//合成用回転行列を宣言
+//	Matrix4 matRot;
+//	//各軸回転行列を宣言
+//	Matrix4 matRotX, matRotY, matRotZ;
+//
+//	// Z軸回転行列を宣言
+//	matRotZ = {
+//		cos(worldTransform_.rotation_.z),sin(worldTransform_.rotation_.z),0.0f,0.0f,
+//		-sin(worldTransform_.rotation_.z),cos(worldTransform_.rotation_.z),0.0f,0.0f,
+//		0.0f,0.0f,1.0f,0.0f,
+//		0.0f,0.0f,0.0f,1.0f
+//	};
+//
+//	// X軸回転行列を宣言
+//	matRotX = {
+//	  1.0f,0.0f,0.0f,0.0f,
+//		0.0f,cos(worldTransform_.rotation_.x),sin(worldTransform_.rotation_.x),0.0f,
+//		0.0f,-sin(worldTransform_.rotation_.x),cos(worldTransform_.rotation_.x),0.0f,
+//		0.0f,0.0f,0.0f,1.0f
+//	};
+//
+//	// Y軸回転行列を宣言
+//	matRotY = {
+//		cos(worldTransform_.rotation_.y),0.0f,-sin(worldTransform_.rotation_.y),0.0f,
+//		0.0f,1.0f,0.0f,0.0f,
+//		sin(worldTransform_.rotation_.y),0.0f,cos(worldTransform_.rotation_.y),0.0f,
+//		0.0f,0.0f,0.0f,1.0f
+//	};
+//
+//	//各軸の回転行列を合成
+//	matRotZ *= matRotX;
+//	matRotZ *= matRotY;
+//	matRot = matRotZ;
+//
+//
+//	// matRotを掛け算して代入
+//	worldTransform_.matWorld_ *= matRot;
+//}
+//
+//void GameScene::SetTrans(float x, float y, float z) {
+//
+//	// X,Y,Z軸周りの平行移動を設定
+//	worldTransform_.translation_ = {x, y, z};
+//	//平行移動行列を宣言
+//	Matrix4 matTrans = MathUtility::Matrix4Identity();
+//
+//	//移動量を行列に設定する
+//	matTrans = {
+//		1.0f,0.0f,0.0f,0.0f,
+//		0.0f,1.0f,0.0f,0.0f,
+//		0.0f,0.0f,1.0f,0.0f,
+//		worldTransform_.translation_.x,worldTransform_.translation_.y,worldTransform_.translation_.z,1.0f
+//	};
+//
+//	// matTransを掛け算して代入
+//	worldTransform_.matWorld_ *= matTrans;
+//}
 
