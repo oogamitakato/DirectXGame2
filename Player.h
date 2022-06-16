@@ -33,14 +33,14 @@ class Player {
 	//初期化(コンストラクタ)
 	Player(Model* model, uint32_t textureHandle);
 
-	//スケーリング設定
-	void ConversionScale(float& x, float& y, float& z);
+	////スケーリング設定
+	//void ConversionScale(float& x, float& y, float& z);
 
-	//回転角設定
-	void ConversionRot(float& x, float& y, float& z);
+	////回転角設定
+	//void ConversionRot(float& x, float& y, float& z);
 
-	//平行移動設定
-	void ConversionTrans(float& x, float& y, float& z);
+	////平行移動設定
+	//void ConversionTrans(float& x, float& y, float& z);
 
 	//更新
 	void Update();
