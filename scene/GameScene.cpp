@@ -121,18 +121,6 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
-	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
-	/*for (int i = 0; i < 12; i++) {
-	    PrimitiveDrawer::GetInstance()->DrawLine3d(
-	      vertex[eageList[i][0]], vertex[eageList[i][1]], Vector4(255, 255, 255, 255));
-	    PrimitiveDrawer::GetInstance()->DrawLine3d(
-	      boxMoved[eageList[i][0]], boxMoved[eageList[i][1]], Vector4(255, 0, 0, 255));
-	    PrimitiveDrawer::GetInstance()->DrawLine3d(
-	      boxRotated[eageList[i][0]], boxRotated[eageList[i][1]], Vector4(0, 255, 0, 255));
-	    PrimitiveDrawer::GetInstance()->DrawLine3d(
-	      boxScaled[eageList[i][0]], boxScaled[eageList[i][1]], Vector4(0, 0, 255, 255));
-	}*/
-
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
 	//

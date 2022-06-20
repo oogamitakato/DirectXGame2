@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Affin.h"
 #include "Input.h"
 #include "DebugText.h"
 #include <math.h>
@@ -59,11 +60,13 @@ void Player::Update()
 	}
 
 	//ç¿ïWà⁄ìÆ	
-	Matrix4 matTrans(
+
+	/*Matrix4 matTrans(
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
-		move.x, move.y, move.z, 1);
+		move.x, move.y, move.z, 1);*/
+	ConversionTrans
 
 	worldTransform_.matWorld_ *= matTrans;
 
