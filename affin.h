@@ -10,8 +10,7 @@ class Affin {
 	Model* model_ = nullptr;
 
   public:
-	Affin(Model* model_);
-
+	
 	//スケーリング設定
 	void ConversionScale(float& x, float& y, float& z);
 

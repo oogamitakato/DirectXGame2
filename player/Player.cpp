@@ -61,13 +61,12 @@ void Player::Update()
 
 	//座標移動	
 
-	/*Matrix4 matTrans(
+	Matrix4 matTrans(
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
-		move.x, move.y, move.z, 1);*/
-	ConversionTrans
-
+		move.x, move.y, move.z, 1);
+	
 	worldTransform_.matWorld_ *= matTrans;
 
 	//キャラクター攻撃処理

@@ -1,9 +1,5 @@
 #include "Affin.h"
 
-Affin::Affin(Model* model_) {
-
-}
-
 //スケーリング設定
 void Affin::ConversionScale(float& x, float& y, float& z) {
 	// X,Y,Z方向のスケーリングを設定
