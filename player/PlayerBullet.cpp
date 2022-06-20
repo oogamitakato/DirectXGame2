@@ -21,10 +21,14 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position) {
 
 //更新
 void PlayerBullet::Update() { 
-	
+
+
+	//行列更新
+	worldTransform_.TransferMatrix();
 }
 
 //描画
 void PlayerBullet::Draw(const ViewProjection& viewProjection) {
 
+	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }

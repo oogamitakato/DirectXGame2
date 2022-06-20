@@ -44,6 +44,16 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
+	//スケーリング設定
+	void SetScale(float& x, float& y, float& z);
+
+	//回転角設定
+	void SetRot(float& x, float& y, float& z);
+
+	//平行移動設定
+	void SetTrans(float x, float y, float z);
+
+
 	Player* player_ = nullptr;
 
   private: // メンバ変数
@@ -69,70 +79,6 @@ class GameScene {
 	
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
-
-	//立方体の頂点
-	Vector3 vertex[8] = {
-	  {-5.0f, -5.0f, -5.0f},
-      {5.0f,  -5.0f, -5.0f},
-      {5.0f,  5.0f,  -5.0f},
-      {-5.0f, 5.0f,  -5.0f},
-	  {-5.0f, -5.0f, 5.0f },
-      {5.0f,  -5.0f, 5.0f },
-      {5.0f,  5.0f,  5.0f },
-      {-5.0f, 5.0f,  5.0f },
-	};
-
-	//立方体の辺
-	int eageList[12][2] = {
-	  {0, 1},
-      {1, 2},
-      {2, 3},
-      {3, 0},
-      {0, 4},
-      {1, 5},
-	  {2, 6},
-      {3, 7},
-      {4, 5},
-      {5, 6},
-      {6, 7},
-      {7, 4},
-	};
-
-	//平行移動する立方体の頂点
-	Vector3 boxMoved[8];
-	Vector3 boxMoved2[8];
-
-	//回転する立方体の頂点
-	Vector3 boxRotated[8];
-	Vector3 boxRotated2[8];
-
-	//拡大する立方体の頂点
-	Vector3 boxScaled[8];
-	Vector3 boxScaled2[8];
-
-	//平行移動
-	float position[4][4] = {
-	  {1.0f,  0.0f,  0.0f,  0.0f},
-	  {0.0f,  1.0f,  0.0f,  0.0f},
-	  {0.0f,  0.0f,  1.0f,  0.0f},
-	  {10.0f, 10.0f, 10.0f, 1.0f},
-	};
-
-	//回転
-	float rotation[4][4] = {
-	  {1.0f, 0.0f,         0.0f,        0.0f},
-	  {0.0f, cos(PI / 4),  sin(PI / 4), 0.0f},
-	  {0.0f, -sin(PI / 4), cos(PI / 4), 0.0f},
-	  {0.0f, 0.0f,         0.0f,        1.0f}
-    };
-
-	//拡大
-	float scale[4][4] = {
-	  {2.0f, 0.0f, 0.0f, 0.0f},
-	  {0.0f, 2.0f, 0.0f, 0.0f},
-	  {0.0f, 0.0f, 2.0f, 0.0f},
-	  {0.0f, 0.0f, 0.0f, 1.0f},
-	};
 
 	/// <summary>
 	/// ゲームシーン用
