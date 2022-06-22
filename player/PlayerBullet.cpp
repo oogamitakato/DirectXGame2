@@ -16,7 +16,9 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position) {
 	worldTransform_.Initialize();
 
 	//引数で受け取った初期座標をリセット
-	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_.translation_ = {position.x, position.y, position.z};
+
+
 }
 
 //更新
