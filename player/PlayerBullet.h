@@ -1,6 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "WorldTransform.h"
+#include "Affin.h"
 
 //自キャラの弾
 class PlayerBullet {
@@ -22,4 +23,5 @@ class PlayerBullet {
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	Affin affin_;
 };

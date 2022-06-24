@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-class Affin {
+struct Affin {
   private:
 	//ワールド変換データ
 	WorldTransform worldTransform_;

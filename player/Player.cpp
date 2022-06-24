@@ -99,6 +99,19 @@ void Player::Draw(ViewProjection viewProjection)
 	}
 }
 
+//UŒ‚
+void Player::Attack() {
+
+	if (input_->PushKey(DIK_SPACE)) {
+		//’e‚ð¶¬‚µA‰Šú‰»
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(model_, worldTransform_.translation_);
+
+		//’e‚ð“o˜^‚·‚é
+		bullet_ = newBullet;
+	}
+}
+
 //void Player::ConversionScale(float& x, float& y, float& z) {
 //
 //	// X,Y,Z•ûŒü‚ÌƒXƒP[ƒŠƒ“ƒO‚ðÝ’è
@@ -233,15 +246,3 @@ void Player::Draw(ViewProjection viewProjection)
 //	// matTrans‚ðŠ|‚¯ŽZ‚µ‚Ä‘ã“ü
 //	worldTransform_.matWorld_ *= matTrans;
 //}
-
-void Player::Attack() { 
-
-	if (input_->PushKey(DIK_SPACE)) {
-		//’e‚ð¶¬‚µA‰Šú‰»
-		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_);
-
-		//’e‚ð“o˜^‚·‚é
-		bullet_ = newBullet;
-	}
-}

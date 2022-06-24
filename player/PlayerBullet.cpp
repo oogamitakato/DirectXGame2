@@ -1,5 +1,6 @@
 #include "PlayerBullet.h"
 #include "player//Player.h"
+#include "Affin.h"
 #include <cassert>
 
 //初期化
@@ -18,11 +19,13 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position) {
 	//引数で受け取った初期座標をリセット
 	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
 
+	
 }
 
 //更新
 void PlayerBullet::Update() { 
-
+	
+	
 	//行列更新
 	worldTransform_.TransferMatrix();
 }
