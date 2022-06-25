@@ -2,22 +2,22 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-struct Affin {
-  private:
-	//ワールド変換データ
-	WorldTransform worldTransform_;
-	//モデル
-	Model* model_ = nullptr;
-
-  public:
-	
+//class Affin {
+//  private:
+//
+//
+//
+//
+//
+//  public:
+//	
+//
+//};
 	//スケーリング設定
-	void ConversionScale(float& x, float& y, float& z);
+	void ConversionScale(float& x, float& y, float& z, WorldTransform worldTransform);
 
 	//回転角設定
-	void ConversionRot(float& x, float& y, float& z);
+	void ConversionRot(float& x, float& y, float& z, WorldTransform worldTransform);
 
 	//平行移動設定
-	void ConversionTrans(float& x, float& y, float& z);
-
-};
+	void ConversionTrans(float x, float y, float z,WorldTransform worldTransform);

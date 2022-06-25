@@ -21,6 +21,7 @@ Player::Player(Model* model, uint32_t textureHandle)
 
 	//ワールド変換データの初期化
 	worldTransform_.Initialize();
+	worldTransform_.matWorld_.m[3][1] = 5;
 }
 
 //更新
@@ -74,7 +75,9 @@ void Player::Update()
 
 	//弾更新
 	if (bullet_) {
-		bullet_->Update();
+		if (input_->PushKey(DIK_SPACE)) {
+			bullet_->Update();
+		}
 	}
 
 	//行列更新
@@ -105,7 +108,12 @@ void Player::Attack() {
 	if (input_->PushKey(DIK_SPACE)) {
 		//弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_);
+		newBullet->Initialize(
+		  model_, {
+		            worldTransform_.matWorld_.m[3][0],
+		            worldTransform_.matWorld_.m[3][1],
+		            worldTransform_.matWorld_.m[3][2],
+		          });
 
 		//弾を登録する
 		bullet_ = newBullet;

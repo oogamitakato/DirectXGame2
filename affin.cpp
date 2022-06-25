@@ -1,25 +1,26 @@
 #include "Affin.h"
 
 //スケーリング設定
-void Affin::ConversionScale(float& x, float& y, float& z) {
+void ConversionScale(float& x, float& y, float& z, WorldTransform worldTransform) {
 	// X,Y,Z方向のスケーリングを設定
-	worldTransform_.scale_ = {x, y, z};
+	Vector3 scale = {x, y, z};
+
 	//スケーリング行列を宣言
 	Matrix4 matScale;
 
 	//スケーリング倍率を行列に設定
 	matScale = {
-	  worldTransform_.scale_.x,
+	  scale.x,
 	  0.0f,
 	  0.0f,
 	  0.0f,
 	  0.0f,
-	  worldTransform_.scale_.y,
+	  scale.y,
 	  0.0f,
 	  0.0f,
 	  0.0f,
 	  0.0f,
-	  worldTransform_.scale_.z,
+	  scale.z,
 	  0.0f,
 	  0.0f,
 	  0.0f,
@@ -27,13 +28,14 @@ void Affin::ConversionScale(float& x, float& y, float& z) {
 	  1.0f};
 
 	// matScaleを掛け算して代入
-	worldTransform_.matWorld_ *= matScale;
+	worldTransform.matWorld_ *= matScale;
 }
 
 //回転角設定
-void Affin::ConversionRot(float& x, float& y, float& z) {
+void ConversionRot(float& x, float& y, float& z, WorldTransform worldTransform) {
 	// X,Y,Z軸周りの回転角を設定
-	worldTransform_.rotation_ = {x, y, z};
+	Vector3 rotation = {x, y, z};
+
 	//合成用回転行列を宣言
 	Matrix4 matRot;
 	//各軸回転行列を宣言
@@ -41,12 +43,12 @@ void Affin::ConversionRot(float& x, float& y, float& z) {
 
 	// Z軸回転行列を宣言
 	matRotZ = {
-	  cos(worldTransform_.rotation_.z),
-	  sin(worldTransform_.rotation_.z),
+	  cos(rotation.z),
+	  sin(rotation.z),
 	  0.0f,
 	  0.0f,
-	  -sin(worldTransform_.rotation_.z),
-	  cos(worldTransform_.rotation_.z),
+	  -sin(rotation.z),
+	  cos(rotation.z),
 	  0.0f,
 	  0.0f,
 	  0.0f,
@@ -65,12 +67,12 @@ void Affin::ConversionRot(float& x, float& y, float& z) {
 	  0.0f,
 	  0.0f,
 	  0.0f,
-	  cos(worldTransform_.rotation_.x),
-	  sin(worldTransform_.rotation_.x),
+	  cos(rotation.x),
+	  sin(rotation.x),
 	  0.0f,
 	  0.0f,
-	  -sin(worldTransform_.rotation_.x),
-	  cos(worldTransform_.rotation_.x),
+	  -sin(rotation.x),
+	  cos(rotation.x),
 	  0.0f,
 	  0.0f,
 	  0.0f,
@@ -79,17 +81,17 @@ void Affin::ConversionRot(float& x, float& y, float& z) {
 
 	// Y軸回転行列を宣言
 	matRotY = {
-	  cos(worldTransform_.rotation_.y),
+	  cos(rotation.y),
 	  0.0f,
-	  -sin(worldTransform_.rotation_.y),
+	  -sin(rotation.y),
 	  0.0f,
 	  0.0f,
 	  1.0f,
 	  0.0f,
 	  0.0f,
-	  sin(worldTransform_.rotation_.y),
+	  sin(rotation.y),
 	  0.0f,
-	  cos(worldTransform_.rotation_.y),
+	  cos(rotation.y),
 	  0.0f,
 	  0.0f,
 	  0.0f,
@@ -102,15 +104,16 @@ void Affin::ConversionRot(float& x, float& y, float& z) {
 	matRot = matRotZ;
 
 	// matRotを掛け算して代入
-	worldTransform_.matWorld_ *= matRot;
+	worldTransform.matWorld_ *= matRot;
 }
 
 //平行移動設定
-void Affin::ConversionTrans(float& x, float& y, float& z) {
+void ConversionTrans(float x, float y, float z, WorldTransform worldTransform) {
 	// X,Y,Z軸周りの平行移動を設定
-	worldTransform_.translation_ = {x, y, z};
+	Vector3 translation = {x, y, z};
+
 	//平行移動行列を宣言
-	Matrix4 matTrans = MathUtility::Matrix4Identity();
+	Matrix4 matTrans;
 
 	//移動量を行列に設定する
 	matTrans = {
@@ -126,11 +129,11 @@ void Affin::ConversionTrans(float& x, float& y, float& z) {
 	  0.0f,
 	  1.0f,
 	  0.0f,
-	  worldTransform_.translation_.x,
-	  worldTransform_.translation_.y,
-	  worldTransform_.translation_.z,
+	  translation.x,
+	  translation.y,
+	  translation.z,
 	  1.0f};
 
 	// matTransを掛け算して代入
-	worldTransform_.matWorld_ *= matTrans;
+	worldTransform.matWorld_ *= matTrans;
 }
