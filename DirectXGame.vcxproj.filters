@@ -49,6 +49,18 @@
     <Filter Include="ヘッダー ファイル\math">
       <UniqueIdentifier>{647f4977-924a-4954-923f-5619e5afc9a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\player">
+      <UniqueIdentifier>{f99568aa-80a3-4a3a-a0b9-365444e16917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\player">
+      <UniqueIdentifier>{9281fa66-9e69-47ca-84db-cbb513918371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\affin">
+      <UniqueIdentifier>{a0a77ac9-8126-4526-bf4d-f5051d0fe8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\affin">
+      <UniqueIdentifier>{c0259a92-c308-4f57-ab8c-96c1de1b51c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,6 +77,15 @@
     </ClCompile>
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="player\Player.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\PlayerBullet.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
+    <ClCompile Include="affin\Affin.cpp">
+      <Filter>ソース ファイル\affin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +169,15 @@
     </ClInclude>
     <ClInclude Include="3d\PrimitiveDrawer.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="player\Player.h">
+      <Filter>ヘッダー ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\PlayerBullet.h">
+      <Filter>ヘッダー ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="affin\Affin.h">
+      <Filter>ヘッダー ファイル\affin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
