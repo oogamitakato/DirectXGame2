@@ -25,35 +25,12 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position) {
 //更新
 void PlayerBullet::Update() {
 
-	matTrans = {
-	  1.0f,
-	  0.0f,
-	  0.0f,
-	  0.0f,
-	  0.0f,
-	  1.0f,
-	  0.0f,
-	  0.0f,
-	  0.0f,
-	  0.0f,
-	  1.0f,
-	  0.0f,
-	  worldTransform_.translation_.x,
-	  worldTransform_.translation_.y,
-	  worldTransform_.translation_.z,
-	  1.0f};
-
-	// matTransを掛け算して代入
-	worldTransform_.matWorld_ *= matTrans;
+	worldTransform_.matWorld_.m[3][0] = worldTransform_.translation_.x;
+	worldTransform_.matWorld_.m[3][1] = worldTransform_.translation_.y;
+	worldTransform_.matWorld_.m[3][2] = worldTransform_.translation_.z;
 
 	//行列更新
 	worldTransform_.TransferMatrix();
-
-	//キャラクターの座標を画面表示する処理
-	/*debugText_->SetPos(50, 120);
-	debugText_->Printf(
-	  "Player : {%f,%f,%f}", worldTransform_.matWorld_.m[3][0], worldTransform_.matWorld_.m[3][1],
-	  worldTransform_.matWorld_.m[3][2]);*/
 }
 
 //描画
