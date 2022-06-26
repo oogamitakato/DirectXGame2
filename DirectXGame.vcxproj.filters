@@ -61,6 +61,12 @@
     <Filter Include="ヘッダー ファイル\affin">
       <UniqueIdentifier>{c0259a92-c308-4f57-ab8c-96c1de1b51c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\enemy">
+      <UniqueIdentifier>{b9cf3096-0c63-4e06-8804-ab019dc4ad95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\enemy">
+      <UniqueIdentifier>{1fe450b3-6473-4d4b-b145-cdfd1de2eea7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="affin\Affin.cpp">
       <Filter>ソース ファイル\affin</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\Enemy.cpp">
+      <Filter>ソース ファイル\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="affin\Affin.h">
       <Filter>ヘッダー ファイル\affin</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\Enemy.h">
+      <Filter>ヘッダー ファイル\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

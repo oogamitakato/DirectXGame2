@@ -32,7 +32,7 @@ void ConversionScale(float& x, float& y, float& z, WorldTransform worldTransform
 }
 
 //‰ñ“]Špİ’è
-void ConversionRot(float& x, float& y, float& z, WorldTransform worldTransform) {
+void ConversionRot(float x, float y, float z, WorldTransform worldTransform) {
 	// X,Y,Z²ü‚è‚Ì‰ñ“]Šp‚ğİ’è
 	Vector3 rotation = {x, y, z};
 

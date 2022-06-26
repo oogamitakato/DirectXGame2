@@ -6,7 +6,7 @@
 void ConversionScale(float& x, float& y, float& z, WorldTransform worldTransform);
 
 //‰ñ“]Špİ’è
-void ConversionRot(float& x, float& y, float& z, WorldTransform worldTransform);
+void ConversionRot(float x, float y, float z, WorldTransform worldTransform);
 
 //•½sˆÚ“®İ’è
 void ConversionTrans(float x, float y, float z,WorldTransform worldTransform);

@@ -4,9 +4,17 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-//自キャラの弾
-class PlayerBullet {
+class Enemy {
   private:
+	//行動フェーズ
+	enum class Phase {
+		Approach, //接近する
+		Leave,    //離脱する
+	};
+
+	//フェーズ
+	Phase phase_ = Phase::Approach;
+
 	//ワールド変換データ
 	WorldTransform worldTransform_;
 	//モデル
@@ -15,18 +23,12 @@ class PlayerBullet {
 	uint32_t textureHandle_ = 0u;
 
 	//速度
-	Vector3 velocity_;
-
-	//弾の寿命
-	static const int32_t kLifeTimer = 60 * 5;
-	//デスタイマー
-	int32_t debugTimer_ = kLifeTimer;
-	//デスフラグ
-	bool isDead_ = false;
+	Vector3 approachVelocity_ = {0.0f, 0.0f, -0.1f};
+	Vector3 leaveVelocity_ = {0.1f, 0.1f, 0.0f};
 
   public:
 	//初期化
-	void Initialize(Model* model, const Vector3& position, const Vector3& velocity);
+	Enemy(Model* model);
 
 	//更新
 	void Update();
@@ -34,6 +36,9 @@ class PlayerBullet {
 	//描画
 	void Draw(const ViewProjection& viewProjection);
 
-	//ゲッター
-	bool IsDead() const { return isDead_; }
+	/*フェーズごとの関数*/
+	//接近フェーズ
+	void Approach();
+	//離脱フェーズ
+	void Leave();
 };
