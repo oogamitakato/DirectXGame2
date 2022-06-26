@@ -14,7 +14,7 @@ class Player {
 	float speed = 0.5f;
 	Vector3 move;
 
-	Matrix4 matTrans = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, move.x, move.y, move.z, 1};
+	Matrix4 matTrans;
 
 	//ワールド変換データ
 	WorldTransform worldTransform_;
@@ -28,6 +28,8 @@ class Player {
 
 	//弾
 	std::list<std::unique_ptr<PlayerBullet>> bullets_;
+
+	Matrix4 matRot;
 
   public:
 	/*メンバ関数*/
@@ -46,4 +48,6 @@ class Player {
 
 	//回転
 	void Rotate();
+	//弾の発射方向の回転
+	Vector3 AttackRotate(Vector3 rotation, WorldTransform worldTransform);
 };

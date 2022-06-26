@@ -33,6 +33,11 @@ void PlayerBullet::Update() {
 	worldTransform_.matWorld_.m[3][1] = worldTransform_.translation_.y;
 	worldTransform_.matWorld_.m[3][2] = worldTransform_.translation_.z;
 
+	//時間経過でデス
+	if (--debugTimer_ <= 0) {
+		isDead_ = true;
+	}
+
 	//行列更新
 	worldTransform_.TransferMatrix();
 }
