@@ -52,7 +52,8 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("mario.jpg");
 
 	// 3Dモデル生成
-	model_ = Model::Create();
+	model_
+		= Model::Create();
 
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);

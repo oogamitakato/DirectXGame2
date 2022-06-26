@@ -106,6 +106,13 @@ void Player::Draw(ViewProjection viewProjection)
 void Player::Attack() {
 
 	if (input_->TriggerKey(DIK_SPACE)) {
+		//’e‚Ì‘¬“x
+		const float kBulletSpeed = 1.0f;
+		Vector3 velocity(0, 0, kBulletSpeed);
+
+		//‘¬“xƒxƒNƒgƒ‹‚ğ©‹@‚ÌŒü‚«‚É‡‚í‚¹‚Ä‰ñ“]‚³‚¹‚é
+		 
+
 		//’e‚ğ¶¬‚µA‰Šú‰»
 		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
 		newBullet->Initialize(
@@ -113,10 +120,14 @@ void Player::Attack() {
 		            worldTransform_.matWorld_.m[3][0],
 		            worldTransform_.matWorld_.m[3][1],
 		            worldTransform_.matWorld_.m[3][2],
-		          });
+		          },velocity);
 
 		//’e‚ğ“o˜^‚·‚é
 		bullets_.push_back(std::move(newBullet));
 	}
 }
 
+//‰ñ“]
+void Player::Rotate() {
+
+}
