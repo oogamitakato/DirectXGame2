@@ -77,9 +77,7 @@ void Player::Update()
 
 	//弾更新
 	for (std::unique_ptr<PlayerBullet>& bullet : bullets_) {
-			bullet->Update();
-		if (input_->TriggerKey(DIK_SPACE)) {
-		}
+		bullet->Update();
 	}
 
 	//行列更新
@@ -132,29 +130,12 @@ void Player::Attack() {
 //回転
 void Player::Rotate() {
 
-	Matrix4 matRot;
+	Matrix4 matRot(
+	  cos(worldTransform_.rotation_.y), 0.0f, -sin(worldTransform_.rotation_.y), 0.0f, 0.0f, 1.0f,
+	  0.0f, 0.0f, sin(worldTransform_.rotation_.y), 0.0f, cos(worldTransform_.rotation_.y), 0.0f,
+	  0.0f, 0.0f, 0.0f, 1.0f);
 
-	//移動量を行列に設定する
-	matRot = {
-	  cos(worldTransform_.rotation_.y),
-	  0.0f,
-	  -sin(worldTransform_.rotation_.y),
-	  0.0f,
-	  0.0f,
-	  1.0f,
-	  0.0f,
-	  0.0f,
-	  sin(worldTransform_.rotation_.y),
-	  0.0f,
-	  cos(worldTransform_.rotation_.y),
-	  0.0f,
-	  0.0f,
-	  0.0f,
-	  0.0f,
-	  1.0f
-	};
-
-	if (input_->PushKey(DIK_Q)) {
+	if (input_->PushKey(DIK_Q)) {		
 		worldTransform_.rotation_.y = 0.05f;
 		worldTransform_.matWorld_ *= matRot;
 	} else if (input_->PushKey(DIK_E)) {
@@ -162,4 +143,6 @@ void Player::Rotate() {
 		worldTransform_.matWorld_ *= matRot;
 	}
 
+	//行列更新
+	worldTransform_.TransferMatrix();
 }
