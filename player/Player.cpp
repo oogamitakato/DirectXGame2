@@ -20,6 +20,8 @@ Player::Player(Model* model, uint32_t textureHandle) {
 
 	//ワールド変換データの初期化
 	worldTransform_.Initialize();
+
+	worldTransform_.matWorld_.m[3][1] = 5;
 }
 
 //更新

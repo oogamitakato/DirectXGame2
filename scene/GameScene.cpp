@@ -54,8 +54,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("mario.jpg");
 
 	// 3Dモデル生成
-	model_
-		= Model::Create();
+	model_ = Model::Create();
 
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
@@ -72,16 +71,18 @@ void GameScene::Initialize() {
 	player_ = new Player(model_, textureHandle_);
 
 	//敵の生成
-	enemy_->Initialize(model_);
+	enemy_ = new Enemy(model_);
 }
 
-void GameScene::Update() { 
+void GameScene::Update() {
 
 	//自キャラの更新
 	player_->Update();
 
 	//敵の更新
-	enemy_->Update();
+	if (enemy_) {
+		enemy_->Update();
+	}
 
 	debugCamera_->Update();
 }
@@ -115,7 +116,10 @@ void GameScene::Draw() {
 
 	//自キャラの描画
 	player_->Draw(viewProjection_);
-	enemy_->Draw(viewProjection_);
+
+	if (enemy_) {
+		enemy_->Draw(viewProjection_);
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -138,5 +142,3 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
-
-

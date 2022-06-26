@@ -14,11 +14,11 @@ class Enemy {
 	uint32_t textureHandle_ = 0u;
 
 	//‘¬“x
-	Vector3 velocity_ = {0.0f,0.0f,-1.0f};
+	Vector3 velocity_ = {0.0f,0.0f,-0.1f};
 
   public:
 	 //‰Šú‰»
-	void Initialize(Model* model);
+	Enemy(Model* model);
 
 	//XV
 	void Update();
