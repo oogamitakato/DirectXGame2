@@ -132,9 +132,34 @@ void Player::Attack() {
 //‰ñ“]
 void Player::Rotate() {
 
+	Matrix4 matRot;
+
+	//ˆÚ“®—Ê‚ðs—ñ‚ÉÝ’è‚·‚é
+	matRot = {
+	  cos(worldTransform_.rotation_.y),
+	  0.0f,
+	  -sin(worldTransform_.rotation_.y),
+	  0.0f,
+	  0.0f,
+	  1.0f,
+	  0.0f,
+	  0.0f,
+	  sin(worldTransform_.rotation_.y),
+	  0.0f,
+	  cos(worldTransform_.rotation_.y),
+	  0.0f,
+	  0.0f,
+	  0.0f,
+	  0.0f,
+	  1.0f
+	};
+
 	if (input_->PushKey(DIK_Q)) {
-		worldTransform_.rotation_.y -= 0.05f;
+		worldTransform_.rotation_.y = 0.05f;
+		worldTransform_.matWorld_ *= matRot;
 	} else if (input_->PushKey(DIK_E)) {
-		worldTransform_.rotation_.y += 0.05f;
+		worldTransform_.rotation_.y = -0.05f;
+		worldTransform_.matWorld_ *= matRot;
 	}
+
 }
