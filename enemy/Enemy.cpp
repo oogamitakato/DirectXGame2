@@ -13,14 +13,23 @@ Enemy::Enemy(Model* model) {
 	worldTransform_.Initialize();
 
 	//初期座標
-	worldTransform_.translation_ = {0.0f,2.0f,50.0f};
-
+	worldTransform_.translation_ = {0.0f, 2.0f, 20.0f};
 }
 
 //更新
-void Enemy::Update() { 
-	//座標を移動させる
-	worldTransform_.translation_ += velocity_;
+void Enemy::Update() {
+
+	switch (phase_) {
+	case Phase::Approach:
+	default:
+		Approach();
+		break;
+
+	case Phase::Leave:
+		Leave();
+		break;
+	}
+
 
 	worldTransform_.matWorld_.m[3][0] = worldTransform_.translation_.x;
 	worldTransform_.matWorld_.m[3][1] = worldTransform_.translation_.y;
@@ -34,4 +43,20 @@ void Enemy::Update() {
 void Enemy::Draw(const ViewProjection& viewProjection) {
 	//モデルの描画
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+}
+
+/*フェーズごとの関数*/
+//接近フェーズ
+void Enemy::Approach() {
+	//座標を移動させる
+	worldTransform_.translation_ += approachVelocity_;
+	//規定の位置に到達したら離脱
+	if (worldTransform_.translation_.z < 0.0f) {
+		phase_ = Phase::Leave;
+	}
+}
+//離脱フェーズ
+void Enemy::Leave() {
+	//移動
+	worldTransform_.translation_ += leaveVelocity_;
 }
