@@ -27,6 +27,8 @@ Player::Player(Model* model, uint32_t textureHandle)
 //XV
 void Player::Update() 
 { 
+	Rotate();
+
 	Vector3 move = {0, 0, 0}; 
 
 	//ˆÚ“®ŒÀŠEÀ•W
@@ -130,4 +132,9 @@ void Player::Attack() {
 //‰ñ“]
 void Player::Rotate() {
 
+	if (input_->PushKey(DIK_Q)) {
+		worldTransform_.rotation_.y -= 0.05f;
+	} else if (input_->PushKey(DIK_E)) {
+		worldTransform_.rotation_.y += 0.05f;
+	}
 }
