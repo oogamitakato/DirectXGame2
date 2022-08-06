@@ -34,7 +34,7 @@ void GameScene::Initialize() {
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
-
+	std::list<float> open;
 	//乱数シード生成器
 	std::random_device seed_gen;
 	//メルセンヌ・ツイスターの乱数エンジン
