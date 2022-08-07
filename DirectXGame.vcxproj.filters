@@ -67,6 +67,12 @@
     <Filter Include="ヘッダー ファイル\enemy">
       <UniqueIdentifier>{1fe450b3-6473-4d4b-b145-cdfd1de2eea7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\field">
+      <UniqueIdentifier>{6a99e9d0-d157-49e1-a53b-18d1f0819107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\field">
+      <UniqueIdentifier>{10439f90-5ff7-434d-a1f2-7375ced181e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,8 +102,8 @@
     <ClCompile Include="enemy\Enemy.cpp">
       <Filter>ソース ファイル\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="field\Field.cpp">
+      <Filter>ソース ファイル\field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,8 +200,8 @@
     <ClInclude Include="enemy\Enemy.h">
       <Filter>ヘッダー ファイル\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="field\Field.h">
+      <Filter>ヘッダー ファイル\field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
