@@ -77,7 +77,7 @@ void GameScene::Initialize() {
 
 	//フィールドの生成
 	
-	field_ = new Field(model_, {0,0,0});
+	field_ = new Field(model_);
 }
 
 void GameScene::Update() {

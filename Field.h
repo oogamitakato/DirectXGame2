@@ -18,7 +18,7 @@ class Field
 
   public:
 	//‰Šú‰»
-	Field(Model* model, const Vector3 position);
+	Field(Model* model);
 
 	//XV
 	void Update();
