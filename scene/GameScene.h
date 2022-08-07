@@ -12,6 +12,7 @@
 #include "WorldTransform.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Field.h"
 #include <math.h>
 
 /// <summary>
@@ -47,6 +48,7 @@ class GameScene {
 	
 	Player* player_ = nullptr;
 	Enemy* enemy_ = nullptr;
+	Field* field_ = nullptr;
 
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;

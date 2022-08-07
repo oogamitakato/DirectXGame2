@@ -14,6 +14,8 @@ GameScene::~GameScene() {
 	delete player_;
 	//敵の解放
 	delete enemy_;
+	//フィールドの解放
+	delete field_;
 
 	delete debugCamera_;
 
@@ -68,21 +70,27 @@ void GameScene::Initialize() {
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
 
 	//自キャラの生成
-	player_ = new Player(model_, textureHandle_);
+	//player_ = new Player(model_, textureHandle_);
 
 	//敵の生成
-	enemy_ = new Enemy(model_);
+	//enemy_ = new Enemy(model_);
+
+	//フィールドの生成
+	
+	field_ = new Field(model_, {0,0,0});
 }
 
 void GameScene::Update() {
 
 	//自キャラの更新
-	player_->Update();
+	//player_->Update();
 
 	//敵の更新
 	if (enemy_) {
-		enemy_->Update();
+		//enemy_->Update();
 	}
+
+	//field_->Update();
 
 	debugCamera_->Update();
 }
@@ -115,11 +123,15 @@ void GameScene::Draw() {
 	/// </summary>
 
 	//自キャラの描画
-	player_->Draw(viewProjection_);
+	//player_->Draw(viewProjection_);
 
+	//敵の描画
 	if (enemy_) {
-		enemy_->Draw(viewProjection_);
+		//enemy_->Draw(viewProjection_);
 	}
+
+	//フィールド
+	field_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

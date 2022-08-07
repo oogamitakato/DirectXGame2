@@ -3,24 +3,24 @@
 //スケーリング設定
 void ConversionScale(float& x, float& y, float& z, WorldTransform worldTransform) {
 	// X,Y,Z方向のスケーリングを設定
-	Vector3 scale = {x, y, z};
+	worldTransform.scale_ = {x, y, z};
 
 	//スケーリング行列を宣言
 	Matrix4 matScale;
 
 	//スケーリング倍率を行列に設定
 	matScale = {
-	  scale.x,
+	  worldTransform.scale_.x,
 	  0.0f,
 	  0.0f,
 	  0.0f,
 	  0.0f,
-	  scale.y,
+	  worldTransform.scale_.y,
 	  0.0f,
 	  0.0f,
 	  0.0f,
 	  0.0f,
-	  scale.z,
+	  worldTransform.scale_.z,
 	  0.0f,
 	  0.0f,
 	  0.0f,
