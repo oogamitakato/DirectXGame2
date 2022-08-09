@@ -70,27 +70,26 @@ void GameScene::Initialize() {
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
 
 	//自キャラの生成
-	//player_ = new Player(model_, textureHandle_);
+	player_ = new Player(model_, textureHandle_);
 
 	//敵の生成
-	//enemy_ = new Enemy(model_);
+	enemy_ = new Enemy(model_);
 
-	//フィールドの生成
-	
+	//フィールドの生成	
 	field_ = new Field(model_);
 }
 
 void GameScene::Update() {
 
 	//自キャラの更新
-	//player_->Update();
+	player_->Update();
 
 	//敵の更新
 	if (enemy_) {
-		//enemy_->Update();
+		enemy_->Update();
 	}
 
-	//field_->Update();
+	field_->Update();
 
 	debugCamera_->Update();
 }
@@ -123,11 +122,11 @@ void GameScene::Draw() {
 	/// </summary>
 
 	//自キャラの描画
-	//player_->Draw(viewProjection_);
+	player_->Draw(viewProjection_);
 
 	//敵の描画
 	if (enemy_) {
-		//enemy_->Draw(viewProjection_);
+		enemy_->Draw(viewProjection_);
 	}
 
 	//フィールド
