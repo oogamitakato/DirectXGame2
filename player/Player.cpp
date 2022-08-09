@@ -150,10 +150,6 @@ void Player::Rotate() {
 	  worldTransform_.matWorld_.m[3][1],
 	  worldTransform_.matWorld_.m[3][2],
 	};
-	//À•W‚ð‚O‚É‚·‚é
-	worldTransform_.matWorld_.m[3][0] = 0;
-	worldTransform_.matWorld_.m[3][1] = 0;
-	worldTransform_.matWorld_.m[3][2] = 0;
 
 	//ƒL[‚ð‰Ÿ‚µ‚Ä‰ñ“]
 	if (input_->PushKey(DIK_Q)) {
