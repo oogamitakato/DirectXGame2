@@ -22,20 +22,21 @@ Enemy::Enemy(Model* model) {
 //敵の弾発射
 void Enemy::Fire() {
 	//弾の速度
-	const float kBulletSpeed = -0.5f;
-	Vector3 velocity(0, 0, kBulletSpeed);
+	const float kBulletSpeed = 0.5f;
+	//自キャラのワールド座標を取得
+	Vector3 velocity = player_->GetWorldPosition();
+	//敵キャラのワールド座標を取得
+	Vector3 enemyPos = GetWorldPosition();
+	//敵キャラ→自キャラの差分ベクトルを求める
+	velocity -= enemyPos;
+	//べクトルの正規化
+	velocity /= sqrt(pow(velocity.x, 2.0f) + pow(velocity.y, 2.0f) + pow(velocity.z, 2.0f));
+	//ベクトルの長さを、速さに合わせる
+	velocity *= kBulletSpeed;
 
 	//弾を生成し、初期化
 	std::unique_ptr<EnemyBullet> newBullet = std::make_unique<EnemyBullet>();
-
-	newBullet->Initialize(
-	  model_,
-	  {
-	    worldTransform_.translation_.x,
-	    worldTransform_.translation_.y,
-	    worldTransform_.translation_.z,
-	  },
-	  velocity);
+	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 
 	//弾を登録する
 	bullets_.push_back(std::move(newBullet));
@@ -133,4 +134,16 @@ void Enemy::Leave() {
 		//発射タイマーを初期化
 		fireTimer = kFireInterval;
 	}
+}
+
+//ワールド座標を取得
+Vector3 Enemy::GetWorldPosition() {
+	//ワールド座標を入れる変数
+	Vector3 worldPos;
+	//ワールド行列の平行移動成分を取得
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
 }

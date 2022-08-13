@@ -50,4 +50,7 @@ class Player {
 	void Rotate();
 	//’e‚Ì”­Ë•ûŒü‚Ì‰ñ“]
 	Vector3 AttackRotate(Vector3 rotation, WorldTransform worldTransform);
+
+	//ƒ[ƒ‹ƒhÀ•W‚ğæ“¾
+	Vector3 GetWorldPosition();
 };

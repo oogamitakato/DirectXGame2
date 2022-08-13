@@ -4,6 +4,10 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "EnemyBullet.h"
+#include "Player.h"
+
+//自機クラスの前方処理
+class Player;
 
 class Enemy {
   private:
@@ -33,7 +37,6 @@ class Enemy {
 	//発射タイマー
 	int32_t fireTimer = 0;
 
-
   public:
 	//初期化
 	Enemy(Model* model);
@@ -60,4 +63,13 @@ class Enemy {
 
 	//発射間隔
 	static const int kFireInterval = 60;
+
+	// setter
+	void SetPlayer(Player* player) { player_ = player; }
+
+	//自キャラ
+	Player* player_ = nullptr;
+
+	//ワールド座標を取得
+	Vector3 GetWorldPosition();
 };
