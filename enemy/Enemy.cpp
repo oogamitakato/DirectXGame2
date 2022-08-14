@@ -13,7 +13,7 @@ Enemy::Enemy(Model* model) {
 	worldTransform_.Initialize();
 
 	//初期座標
-	worldTransform_.translation_ = {-10.0f, -10.0f, 20.0f};
+	worldTransform_.translation_ = {-10.0f, -10.0f, 50.0f};
 
 	//接近フェーズ初期化
 	InitApproach();
@@ -97,20 +97,20 @@ void Enemy::Approach() {
 	//座標を移動させる
 	worldTransform_.translation_ += approachVelocity_;
 	//規定の位置に到達したら離脱
-	if (worldTransform_.translation_.z < 0.0f) {
+	if (worldTransform_.translation_.z < 10.0f) {
 		phase_ = Phase::Leave;
 	}
 
-	////発射タイマーカウントダウン
-	//fireTimer--;
+	//発射タイマーカウントダウン
+	fireTimer--;
 
-	////指定時間に達した
-	//if (fireTimer <= 0) {
-	//	//弾発射
-	//	Fire();
-	//	//発射タイマーを初期化
-	//	fireTimer = kFireInterval;
-	//}
+	//指定時間に達した
+	if (fireTimer <= 0) {
+		//弾発射
+		Fire();
+		//発射タイマーを初期化
+		fireTimer = kFireInterval;
+	}
 }
 
 //接近フェーズ初期化
@@ -123,6 +123,10 @@ void Enemy::InitLeave() {
 void Enemy::Leave() {
 	//移動
 	worldTransform_.translation_ += leaveVelocity_;
+	//規定の位置に到達したら離脱
+	if (worldTransform_.translation_.z > 60.0f) {
+		phase_ = Phase::Approach;
+	}
 
 	//発射タイマーカウントダウン
 	fireTimer--;
@@ -146,4 +150,9 @@ Vector3 Enemy::GetWorldPosition() {
 	worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldPos;
+}
+
+//衝突を検出したら呼び出される関数
+void Enemy::OnCollision() {
+
 }

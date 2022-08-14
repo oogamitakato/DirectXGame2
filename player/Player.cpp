@@ -197,3 +197,8 @@ Vector3 Player::GetWorldPosition() {
 
 	return worldPos;
 }
+
+//Õ“Ë‚ğŒŸo‚µ‚½‚çŒÄ‚Ño‚³‚ê‚éŠÖ”
+void Player::OnCollision() {
+
+}

@@ -44,6 +44,11 @@ class GameScene {
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// 衝突判定と応答
+	/// </summary>
+	void CheckAllCollisions();
 	
 	Player* player_ = nullptr;
 	Enemy* enemy_ = nullptr;

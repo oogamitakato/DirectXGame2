@@ -29,7 +29,7 @@ class Enemy {
 
 	//速度
 	Vector3 approachVelocity_ = {0.0f, 0.0f, -0.1f};
-	Vector3 leaveVelocity_ = {0.1f, 0.1f, 0.0f};
+	Vector3 leaveVelocity_ = {0.0f, 0.0f, 0.1f};
 
 	//弾
 	std::list<std::unique_ptr<EnemyBullet>> bullets_;
@@ -72,4 +72,10 @@ class Enemy {
 
 	//ワールド座標を取得
 	Vector3 GetWorldPosition();
+
+	//衝突を検出したら呼び出される関数
+	void OnCollision();
+
+	//弾リストを取得
+	const std::list<std::unique_ptr<EnemyBullet>>& GetBullets() { return bullets_; }
 };

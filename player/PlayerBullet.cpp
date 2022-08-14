@@ -48,3 +48,18 @@ void PlayerBullet::Draw(const ViewProjection& viewProjection) {
 	//モデルの描画
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }
+
+//衝突を検出したら呼び出される関数
+void PlayerBullet::OnCollision() { isDead_ = true; }
+
+//ワールド座標を取得
+Vector3 PlayerBullet::GetWorldPosition() {
+	//ワールド座標を入れる変数
+	Vector3 worldPos;
+	//ワールド行列の平行移動成分を取得
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
+}
