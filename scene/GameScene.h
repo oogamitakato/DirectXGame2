@@ -12,6 +12,7 @@
 #include "WorldTransform.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "skydome.h"
 #include <math.h>
 
 /// <summary>
@@ -50,8 +51,12 @@ class GameScene {
 	/// </summary>
 	void CheckAllCollisions();
 	
+	//自キャラ
 	Player* player_ = nullptr;
+	//敵
 	Enemy* enemy_ = nullptr;
+	//天球
+	Skydome* skydome_ = nullptr;
 
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -70,6 +75,7 @@ class GameScene {
 
 	// 3Dモデル
 	Model* model_ = nullptr;
+	Model* modelSkydome_ = nullptr;
 
 	//ワールドトランスフォーム
 	WorldTransform worldTransform_;
