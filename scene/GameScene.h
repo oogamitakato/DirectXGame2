@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "skydome.h"
+#include "RailCamera.h"
 #include <math.h>
 
 /// <summary>
@@ -57,6 +58,8 @@ class GameScene {
 	Enemy* enemy_ = nullptr;
 	//天球
 	Skydome* skydome_ = nullptr;
+	//レールカメラ
+	RailCamera* railCamera_ = nullptr;
 
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;

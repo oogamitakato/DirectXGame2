@@ -20,6 +20,8 @@ GameScene::~GameScene() {
 	//天球の解放
 	delete skydome_;
 	delete modelSkydome_;
+	//レールカメラの解放
+	delete railCamera_;
 
 }
 
@@ -33,7 +35,7 @@ void GameScene::Initialize() {
 	//ワールドトランスフォームの初期化
 
 	//カメラ視点座標を設定
-	viewProjection_.eye = {0, 0, -50};
+	//viewProjection_.eye = {0, 0, -50};
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -84,6 +86,11 @@ void GameScene::Initialize() {
 	skydome_ = new Skydome();
 	//天球の初期化
 	skydome_->Initialize(modelSkydome_, textureHandle_);
+
+	//レールカメラ生成
+	railCamera_ = new RailCamera();
+	//レールカメラの初期化
+	railCamera_->Initialize({0.0f,0.0f,0.0f}, {0.0f, 0.0f, 0.0f});
 }
 
 void GameScene::Update() {
@@ -103,6 +110,12 @@ void GameScene::Update() {
 
 	//天球の更新
 	skydome_->Update();
+
+	//レールカメラの更新
+	railCamera_->Update();
+	debugText_->SetPos(50, 140);
+	debugText_->Printf(
+	  "eye : {%f, %f, %f}", viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
 }
 
 void GameScene::Draw() {
@@ -140,7 +153,7 @@ void GameScene::Draw() {
 	}
 
 	//天球の描画
-	skydome_->Draw(viewProjection_);
+	//skydome_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -216,7 +229,7 @@ void GameScene::CheckAllCollisions() {
 		  pow(posA.x - posB.x, 2.0f) + pow(posA.y - posB.y, 2.0f) + pow(posA.z - posB.z, 2.0f);
 
 		//当たり判定の半径を設定
-		float radianA = 1.0f;
+		float radianA = 5.0f;
 		float radianB = 1.0f;
 
 		float collision = pow(radianA + radianB, 2.0f);

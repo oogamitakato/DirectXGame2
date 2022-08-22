@@ -29,13 +29,18 @@ class Enemy {
 
 	//速度
 	Vector3 approachVelocity_ = {0.0f, 0.0f, -0.1f};
-	Vector3 leaveVelocity_ = {0.0f, 0.0f, 0.1f};
+	Vector3 leaveVelocity_ = {0.1f, 0.0f, 0.0f};
 
 	//弾
 	std::list<std::unique_ptr<EnemyBullet>> bullets_;
 
 	//発射タイマー
 	int32_t fireTimer = 0;
+
+	//敵HP
+	int hp = 50;
+	//デスフラグ
+	bool isDead_ = false;
 
   public:
 	//初期化
@@ -62,7 +67,7 @@ class Enemy {
 	void Leave();
 
 	//発射間隔
-	static const int kFireInterval = 60;
+	static const int kFireInterval = 10;
 
 	// setter
 	void SetPlayer(Player* player) { player_ = player; }
@@ -72,6 +77,9 @@ class Enemy {
 
 	//ワールド座標を取得
 	Vector3 GetWorldPosition();
+
+	//ゲッター
+	bool IsDead() const { return isDead_; }
 
 	//衝突を検出したら呼び出される関数
 	void OnCollision();

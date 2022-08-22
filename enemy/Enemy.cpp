@@ -8,12 +8,13 @@ Enemy::Enemy(Model* model) {
 
 	//引数として受け取ったデータをメンバ変数に記録する
 	model_ = model;
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	textureHandle_ = TextureManager::Load("3Denemy.png");
 	//ワールド変換データの初期化
 	worldTransform_.Initialize();
 
 	//初期座標
-	worldTransform_.translation_ = {-10.0f, -10.0f, 50.0f};
+	worldTransform_.translation_ = {0.0f, 5.0f, 50.0f};
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
 
 	//接近フェーズ初期化
 	InitApproach();
@@ -60,8 +61,10 @@ void Enemy::Update() {
 	bullets_.remove_if([](std::unique_ptr<EnemyBullet>& bullet) { return bullet->IsDead(); });
 
 
-	/*ConversionTrans(
-	  approachVelocity_.x, approachVelocity_.y, approachVelocity_.z, worldTransform_);*/
+	worldTransform_.matWorld_.m[0][0] = worldTransform_.scale_.x;
+	worldTransform_.matWorld_.m[1][1] = worldTransform_.scale_.y;
+	worldTransform_.matWorld_.m[2][2] = worldTransform_.scale_.z;
+
 	worldTransform_.matWorld_.m[3][0] = worldTransform_.translation_.x;
 	worldTransform_.matWorld_.m[3][1] = worldTransform_.translation_.y;
 	worldTransform_.matWorld_.m[3][2] = worldTransform_.translation_.z;
@@ -70,18 +73,22 @@ void Enemy::Update() {
 	worldTransform_.TransferMatrix();
 
 	//弾更新
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->Update();
+	if (isDead_ == false) {
+		for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
+			bullet->Update();
+		}
 	}
 }
 
 //描画
 void Enemy::Draw(const ViewProjection& viewProjection) {
 	//モデルの描画
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	if (isDead_ == false) {
+		model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
-	for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
-		bullet->Draw(viewProjection);
+		for (std::unique_ptr<EnemyBullet>& bullet : bullets_) {
+			bullet->Draw(viewProjection);
+		}
 	}
 }
 
@@ -97,20 +104,20 @@ void Enemy::Approach() {
 	//座標を移動させる
 	worldTransform_.translation_ += approachVelocity_;
 	//規定の位置に到達したら離脱
-	if (worldTransform_.translation_.z < 10.0f) {
+	if (worldTransform_.translation_.z < 20.0f) {
 		phase_ = Phase::Leave;
 	}
 
-	//発射タイマーカウントダウン
-	fireTimer--;
+	////発射タイマーカウントダウン
+	//fireTimer--;
 
-	//指定時間に達した
-	if (fireTimer <= 0) {
-		//弾発射
-		Fire();
-		//発射タイマーを初期化
-		fireTimer = kFireInterval;
-	}
+	////指定時間に達した
+	//if (fireTimer <= 0) {
+	//	//弾発射
+	//	Fire();
+	//	//発射タイマーを初期化
+	//	fireTimer = kFireInterval;
+	//}
 }
 
 //接近フェーズ初期化
@@ -123,6 +130,11 @@ void Enemy::InitLeave() {
 void Enemy::Leave() {
 	//移動
 	worldTransform_.translation_ += leaveVelocity_;
+	if (worldTransform_.translation_.x > 30) {
+		leaveVelocity_ = -leaveVelocity_;
+	} else if (worldTransform_.translation_.x < -30) {
+		leaveVelocity_ = -leaveVelocity_;
+	}
 	//規定の位置に到達したら離脱
 	if (worldTransform_.translation_.z > 60.0f) {
 		phase_ = Phase::Approach;
@@ -153,6 +165,10 @@ Vector3 Enemy::GetWorldPosition() {
 }
 
 //衝突を検出したら呼び出される関数
-void Enemy::OnCollision() {
+void Enemy::OnCollision() { 
 
+	hp--;
+	if (hp <= 0) {
+		isDead_ = true;	
+	}
 }
